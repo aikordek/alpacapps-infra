@@ -1,53 +1,58 @@
-# CLAUDE.md - [Your Project Name]
+# CLAUDE.md — aiinfra
 
 This file provides context for Claude (AI assistant) when working on this codebase.
 
 > **IMPORTANT: You have direct database access!**
-> Always run SQL migrations directly using `psql` - never ask the user to run SQL manually.
+> Always run SQL migrations via `SUPABASE_ACCESS_TOKEN=... supabase db push` — never ask the user to run SQL manually.
 
 > **IMPORTANT: Push changes immediately!**
-> This is a GitHub Pages site - changes only go live after pushing.
-> Always `git push` as soon as changes are ready.
+> This is a GitHub Pages site — changes only go live after pushing to `main`.
+> Always `git push` (or open a PR from your worktree branch) as soon as changes are ready.
 
-> **IMPORTANT: First-time setup!**
-> Run `/setup-alpacapps-infra` to set up the full infrastructure interactively.
-> If the Supabase CLI is not installed or linked, run:
-> `npm install -g supabase && supabase login && supabase link --project-ref YOUR_REF`
+> **IMPORTANT: Always set SUPABASE_ACCESS_TOKEN**
+> The CLI requires it: `export SUPABASE_ACCESS_TOKEN=<token from CLAUDE.local.md>`
 
 ## Project Overview
 
-[Your project] is a [type of system] for [purpose]. It manages [core entities].
+**aiinfra** is a personal multi-function AI platform for software development of all sorts.
 
 **Tech Stack:**
-- Frontend: Next.js 16 (React 19, TypeScript, Tailwind CSS)
-- Backend: Supabase (PostgreSQL + Storage + Auth)
-- Hosting: GitHub Pages (static export)
+- Frontend: Next.js 16 (React 19, TypeScript, Tailwind CSS v4)
+- Backend: Supabase (PostgreSQL + Auth) — project `nppcwprqiizrrnlrdeog`
+- AI: Google Gemini 2.0 Flash via `ai-generate` edge function
+- Email: Resend via `send-email` edge function
+- Hosting: GitHub Pages (static export from `main` branch)
 - i18n: Dictionary-based multi-language support
 
 **Live URLs:**
-- Public site: https://USERNAME.github.io/REPO/
-- Intranet: https://USERNAME.github.io/REPO/en/intranet/
+- Public site: https://aikordek.github.io/alpacapps-infra/
+- GitHub repo: https://github.com/aikordek/alpacapps-infra
+- Supabase dashboard: https://supabase.com/dashboard/project/nppcwprqiizrrnlrdeog
 
 ## Deployment
 
-Push to main and it's live. No build step, no PR process.
-**For Claude:** Always push changes immediately.
+Push to `main` and it's live. No build step needed for vanilla HTML pages.
+For Next.js pages: `npm run build` then commit the `out/` directory.
+**For Claude:** Always push changes immediately after committing.
 
-## Shared Files
+## Tailwind CSS
 
-- `shared/supabase.js` — Supabase client init (URL + anon key as globals)
+- **Next.js:** Configured via PostCSS (`postcss.config.mjs`) — `@import "tailwindcss"` in `src/app/globals.css`
+- **Vanilla HTML:** Standalone build at `styles/tailwind.out.css` (committed)
+  - Edit: `styles/tailwind.css`
+  - Rebuild: `npm run css:build`
+
+## Shared Files (Vanilla JS Pages)
+
+- `shared/supabase.js` — Supabase client (URL + anon key hardcoded — anon key is public-safe)
 - `shared/auth.js` — Auth module: profile button, login modal, page guard
 - `shared/admin.css` — Admin styles: layout, tables, modals, badges (themeable via `--aap-*` CSS vars)
 
 ### Auth System (`shared/auth.js`)
 
-Provides login/profile functionality on all pages:
-
 - **Profile button**: Auto-inserts into nav bar. Shows person icon when logged out, initials avatar when logged in.
-- **Login modal**: Email/password via `supabase.auth.signInWithPassword()`. Opens on profile icon click.
-- **Dropdown menu**: When logged in, clicking avatar shows dropdown with "Admin" link and "Sign Out".
+- **Login modal**: Email/password via `supabase.auth.signInWithPassword()`.
 - **Page guard**: Admin pages call `requireAuth(callback)` — redirects to `../index.html` if not authenticated.
-- **Supabase client**: Exposed as `window.adminSupabase` for admin page data access.
 
 **Script loading order on every page:**
 ```html
@@ -56,76 +61,68 @@ Provides login/profile functionality on all pages:
 <script src="shared/auth.js"></script>
 ```
 
-**`shared/supabase.js` must export globals** (auth.js reads these):
-```javascript
-var SUPABASE_URL = 'https://YOUR_REF.supabase.co';
-var SUPABASE_ANON_KEY = 'your-anon-key';
-```
-
-### Admin Pages (`admin/`)
-
-- All admin pages are in `admin/` directory with `<meta name="robots" content="noindex, nofollow">`
-- Each page loads `shared/admin.css` and calls `requireAuth()`:
-```javascript
-requireAuth(function(user, supabase) {
-    // Page is authenticated — load data using supabase client
-});
-```
-- Admin topbar nav links between admin sub-pages
-- CRUD pattern: `admin-table` for listing, `admin-modal` for add/edit forms
-- CSS classes are themeable via `--aap-*` custom properties
-
 ## Supabase Details
 
-- Project ID: `YOUR_PROJECT_REF`
-- URL: `https://YOUR_PROJECT_REF.supabase.co`
-- Anon key is in `src/lib/supabase.ts` and `shared/supabase.js`
+- **Project ref:** `nppcwprqiizrrnlrdeog`
+- **Region:** East US (Ohio) — us-east-2
+- **URL:** https://nppcwprqiizrrnlrdeog.supabase.co
+- **Anon key** (public-safe) in: `src/lib/supabase.ts` and `shared/supabase.js`
+- **Service role key** stored as Supabase secret `SERVICE_ROLE_KEY` (edge functions only)
 
-### Direct Database Access (for Claude)
-
-```bash
-psql "postgres://postgres.YOUR_REF:YOUR_PASSWORD@aws-0-REGION.pooler.supabase.com:5432/postgres" -c "SQL HERE"
-```
-
-### Supabase CLI Access (for Claude)
+### Supabase CLI (for Claude)
 
 ```bash
-supabase functions deploy <function-name>
-supabase functions logs <function-name>
-supabase secrets set KEY=value
+export SUPABASE_ACCESS_TOKEN=<from CLAUDE.local.md>
+supabase db push                          # run migrations
+supabase functions deploy <name>          # deploy edge function
+supabase functions logs <name>            # check logs
+supabase secrets set KEY=value            # store secret
 ```
 
-Run these directly. If CLI not installed, install and link first.
+> Note: Direct `psql` DNS (`db.nppcwprqiizrrnlrdeog.supabase.co`) not resolving locally — use `supabase db push` instead.
 
 ## Key Files
 
-- `src/lib/supabase.ts` — Supabase client (Next.js app)
-- `shared/supabase.js` — Supabase client (vanilla JS pages)
-- `next.config.ts` — basePath must match GitHub repo name
+- `src/lib/supabase.ts` — Supabase client (Next.js)
+- `src/lib/email.ts` — `sendEmail({ to, subject, html })` via Resend edge function
+- `src/lib/ai.ts` — `aiGenerate({ prompt, model?, system?, history? })` via Gemini edge function
+- `shared/supabase.js` — Supabase client (vanilla JS)
+- `next.config.ts` — basePath: `/alpacapps-infra`
 - `src/i18n/config.ts` — supported locales
 - `src/i18n/dictionaries/*.json` — translation files
-- `src/contexts/auth-context.tsx` — authentication
+- `src/contexts/auth-context.tsx` — authentication context
+
+## Edge Functions
+
+| Function | Purpose | Auth required |
+|---|---|---|
+| `send-email` | Send email via Resend | Yes (JWT) |
+| `ai-generate` | Gemini AI generation | Yes (JWT) |
+
+## Database Tables
+
+| Table | Purpose |
+|---|---|
+| `page_display_config` | Controls which tabs/sections are visible in the intranet |
 
 ## External Services
 
 ### Email (Resend)
-- API key stored as Supabase secret: `RESEND_API_KEY`
+- API key: Supabase secret `RESEND_API_KEY`
+- Edge function: `send-email`
+- Default from: `onboarding@resend.dev` (update with custom domain in `supabase/functions/send-email/index.ts`)
 
-### SMS (Telnyx)
-- Config in `telnyx_config` table
-- Edge functions: `send-sms`, `telnyx-webhook` (deploy with `--no-verify-jwt`)
-
-### Payments (Square)
-- Config in `square_config` table
-- Edge function: `process-square-payment`
-
-### E-Signatures (SignWell)
-- Config in `signwell_config` table
-- Edge function: `signwell-webhook` (deploy with `--no-verify-jwt`)
+### AI (Google Gemini)
+- API key: Supabase secret `GEMINI_API_KEY`
+- Edge function: `ai-generate`
+- Default model: `gemini-2.0-flash`
+- Supports: prompt, system instruction, multi-turn history, model override
 
 ## Conventions
 
-1. Use toast notifications, not alert()
+1. Use toast notifications, not `alert()`
 2. Filter archived items client-side
 3. Don't expose personal info in public views
-4. Client-side image compression for files > 500KB
+4. Client-side image compression for files > 500 KB
+5. All new DB tables must have RLS enabled
+6. Secrets never go in committed files — use Supabase secrets or `.env.local`

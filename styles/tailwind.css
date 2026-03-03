@@ -1,0 +1,21 @@
+@import "tailwindcss";
+
+/* Source files for class scanning */
+@source "../index.html";
+@source "../docs/**/*.html";
+@source "../shared/**/*.js";
+@source "../src/**/*.{ts,tsx}";
+
+/* Design tokens mapped from project CSS custom properties */
+@theme {
+  --color-background: #ffffff;
+  --color-foreground: #171717;
+  --color-primary: #2563eb;
+  --color-primary-hover: #1d4ed8;
+  --color-secondary: #64748b;
+  --color-surface: #f8fafc;
+  --color-border: #e2e8f0;
+  --color-success: #16a34a;
+  --color-warning: #d97706;
+  --color-error: #dc2626;
+}
