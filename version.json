@@ -1,9 +1,9 @@
 {
-  "version": "v260303.02 2:43pm",
-  "release": 2,
-  "sha": "aa3ff64",
-  "fullSha": "aa3ff6472ae0e7dfc3ba156c0035973c96cd42a0",
+  "version": "v260303.03 2:45pm",
+  "release": 3,
+  "sha": "d3904e7",
+  "fullSha": "d3904e76e6bc9f124eab3e1b064ced2edc1abd91",
   "actor": "aikordek",
-  "pushedAt": "2026-03-03T20:43:13Z",
-  "commits": [{"sha": "47d2e5a", "message": "feat: set up Tailwind CSS v4 standalone build + fix basePath", "author": "Ai"}, {"sha": "17f0f7b", "message": "feat: connect Supabase project (aiinfra / nppcwprqiizrrnlrdeog)", "author": "Ai"}, {"sha": "223a4f6", "message": "feat: add Resend email via send-email edge function", "author": "Ai"}, {"sha": "323c9aa", "message": "feat: add Google Gemini AI via ai-generate edge function", "author": "Ai"}, {"sha": "b76c96c", "message": "docs: update CLAUDE.md with actual project config and service details", "author": "Ai"}, {"sha": "aa3ff64", "message": "Merge pull request #1 from aikordek/claude/cranky-ramanujan", "author": "Ai Kordek"}]
+  "pushedAt": "2026-03-03T20:45:31Z",
+  "commits": [{"sha": "5b9dedd", "message": "chore: rename repo to aidev, update basePath to /aidev", "author": "Ai"}, {"sha": "d3904e7", "message": "Merge pull request #2 from aikordek/claude/cranky-ramanujan", "author": "Ai Kordek"}]
 }
