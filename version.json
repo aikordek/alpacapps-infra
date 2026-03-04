@@ -1,9 +1,9 @@
 {
-  "version": "v260304.01 4:04pm",
-  "release": 1,
-  "sha": "6a2e599",
-  "fullSha": "6a2e599e06d9aa78a332d1f3a61792515a9f37e5",
+  "version": "v260304.02 4:14pm",
+  "release": 2,
+  "sha": "94cce6a",
+  "fullSha": "94cce6a1c5fb772f80538c129b38d0fa51f60d62",
   "actor": "aikordek",
-  "pushedAt": "2026-03-04T22:04:06Z",
-  "commits": [{"sha": "6a69cd5", "message": "feat: add Google Sign-In to login page and shared auth modal", "author": "Ai"}, {"sha": "6a2e599", "message": "Merge pull request #3 from aikordek/claude/loving-wu", "author": "Ai Kordek"}]
+  "pushedAt": "2026-03-04T22:14:46Z",
+  "commits": [{"sha": "c159664", "message": "ci: add GitHub Actions build and deploy workflow", "author": "Ai"}, {"sha": "94cce6a", "message": "Merge pull request #4 from aikordek/claude/loving-wu", "author": "Ai Kordek"}]
 }
