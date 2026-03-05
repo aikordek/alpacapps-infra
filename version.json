@@ -1,9 +1,9 @@
 {
-  "version": "v260304.02 4:14pm",
-  "release": 2,
-  "sha": "94cce6a",
-  "fullSha": "94cce6a1c5fb772f80538c129b38d0fa51f60d62",
+  "version": "v260305.01 9:39pm",
+  "release": 1,
+  "sha": "d22b129",
+  "fullSha": "d22b1297388acb8754640050ebe1e105a0a7af90",
   "actor": "aikordek",
-  "pushedAt": "2026-03-04T22:14:46Z",
-  "commits": [{"sha": "c159664", "message": "ci: add GitHub Actions build and deploy workflow", "author": "Ai"}, {"sha": "94cce6a", "message": "Merge pull request #4 from aikordek/claude/loving-wu", "author": "Ai Kordek"}]
+  "pushedAt": "2026-03-05T03:39:32Z",
+  "commits": [{"sha": "96e29c4", "message": "fix: exclude supabase/ from TypeScript compilation (Deno edge functions)", "author": "Ai"}, {"sha": "d22b129", "message": "Merge pull request #5 from aikordek/claude/loving-wu", "author": "Ai Kordek"}]
 }
